@@ -3,8 +3,10 @@ import { SearchContext } from '../src/components/Search/SearchProvider';
 
 export const withSearchProvider = ({
 	isOpen = false,
+	isLoading = false,
 }: {
 	isOpen?: boolean;
+	isLoading?: boolean;
 } = {}) => {
 	return (Story: React.ComponentType) => {
 		return (
@@ -15,6 +17,7 @@ export const withSearchProvider = ({
 					closeSearch: () => {},
 					query: '',
 					setQuery: () => {},
+					isLoading,
 				}}
 			>
 				<Story />

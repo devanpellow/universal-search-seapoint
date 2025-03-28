@@ -32,3 +32,11 @@ Step 5:
 
 Step 6:
 
+
+Assumptions/Expansions:
+- We will have different types of search results in the future.
+- We will have different groups of search results in the future.
+- I expanded the mock data to include more entities to test the search functionality.
+
+
+

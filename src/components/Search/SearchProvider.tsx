@@ -12,6 +12,7 @@ type SearchContextType = {
 	closeSearch: () => void;
 	query: string;
 	setQuery: (query: string) => void;
+	isLoading: boolean;
 };
 
 export const SearchContext = createContext<SearchContextType | undefined>(
@@ -21,6 +22,7 @@ export const SearchContext = createContext<SearchContextType | undefined>(
 export function SearchProvider({ children }: { children: React.ReactNode }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [query, setQuery] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const openSearch = useCallback(() => {
 		setIsOpen(true);
@@ -65,6 +67,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 				closeSearch,
 				query,
 				setQuery,
+				isLoading,
 			}}
 		>
 			{children}
