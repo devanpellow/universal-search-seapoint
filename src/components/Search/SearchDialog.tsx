@@ -32,6 +32,7 @@ const SearchDialog = () => {
 				aria-labelledby="search-dialog-title"
 				aria-describedby="search-dialog-description"
 			>
+				{/* Hidden from UI but visible to screen readers for accessibility */}
 				<VisuallyHidden>
 					<DialogHeader>
 						<DialogTitle>Search</DialogTitle>

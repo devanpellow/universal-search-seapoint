@@ -9,41 +9,43 @@
 
 ## My Implementation Plan:
 
-Step 1:
+## Implementation Process
 
-- Create project with vite react-ts
-- Install dependencies such as storybook, tailwind, and shadcn.
+### 1. Project Setup
+- Initialized project using Vite with React and TypeScript
+- Set up development environment with Storybook for component development
+- Installed dependencies such as storybook, tailwind, use-debounce, and shadcn.
+- Configured Tailwind CSS for styling and shadcn/ui for accessible UI components
+- Established project structure and code organization patterns
 
-Step 2:
+### 2. Design Approach
+- Usually, I would have started with a Figma design or would have created my own. But for the sake of time, I first designed my components in Storybook.
 
-- For the sake of time, I didn't create the designs in Figma first, but normally I would start with a design or create my own in Figma.
+### 3. Component/State Architecture
+- Created components based on their single responsibility:
+  - `SearchTriggerButton`: Button that triggers the search dialog, this would be a component that would be used in the header of the app. I chose to make this a component because it is reusable and can be used in different parts of the app. Can be opened via clicking the input.
+  - `SearchDialog`: Main modal container that opens when the user triggers the search dialog.
+    - Contains sub-components: `Hint` and `Loading` skeletons
+  - `SearchInput`: Input field with query handling
+  - `SearchResults`: Container for organizing and displaying search results
+  - `SearchResultGroup`: Logical grouping of results by entity type. This is dynamic and should handle new entity types if the API is extended.
+  - `SearchResultItem`: Templated items for different entity types (vendors, transactions)
+    - Contains sub-components: `TransactionItem` and `VendorItem`. When new entity types are added this should be the only component that needs to be updated since the shape of the API response could be different.
+  - `SearchProvider`: Context provider for managing search state. This would watch for keyboard events and update the state of the search dialog. I chose to use a context provider because an easy way to pass the state to all the components that need it without prop drilling.
 
-Step 3:
+### 4. Development Workflow
+- I prefer to start building the components in Storybook. This ensures that the components are working as expected and then I can integrate them into the app.
+- Created a context-based state management system with SearchProvider to manage the state of the search dialog. This 
+- Developed reusable Storybook decorators to simulate different search states
 
-- Define which components are needed and create components in the components folder.
-  - SearchDialog (Universal search modal)
-  - SearchInput (Search input component)
-  - SearchResults (List of search item results that will be displayed back to the user)
-  - SearchResultItem (Individual search result items component)
-  - SearchResultGroup (Grouped search result items component)
-
-Step 4:
-
-- Build the entry point first in Storybook and the add it to the app.
-- Build the dialog component first in Storybook and then add it to the app.
-- Create a search provider to manage the state of the search modal.
-- Create a storybook decorator to add the search provider to the storybook.
-- Build the SearchResultItem, SearchResults, and SearchResultGroup components in storybook with mocked data.
-
-Step 5:
-- Implement the search function in the search provider.
-- Return data from the search function
-- Add error handling to the search function. And return errors to the user.
-- Empty state when no results are found.
-- Connect the search provider to the search dialog component.
-- Group the search results by type. Assuming that we will have different types in the future, I tried to make the group by type dynamic and easy to create new groups types.
-
-Step 6:
+### 5. Search Functionality
+- Implemented core search logic with the following features:
+  - Real-time search with debounced input
+  - Robust error handling with user feedback
+  - Empty state management and loading indicators
+  - Dynamic result grouping by entity type
+  - Prefix-based filtering (e.g., "vendor:", "transaction:")
+- Designed the system to be extensible for future entity types and search capabilities
 
 ### Assumptions/Expansions:
 
