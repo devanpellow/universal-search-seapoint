@@ -33,10 +33,9 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+			if ((e.metaKey || e.ctrlKey) && e.key === 'k' && !isOpen) {
 				e.preventDefault();
-				if (isOpen) closeSearch();
-				else openSearch();
+				openSearch();
 			}
 
 			if (
