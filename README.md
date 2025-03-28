@@ -9,7 +9,7 @@
 
 ## Demo
 
-[Link to live demo](https://universal-search-component-demo.vercel.app/)
+[Link to live demo](https://seapoint-universal-search.netlify.app/)
 
 ## My Implementation Plan:
 
