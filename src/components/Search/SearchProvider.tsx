@@ -17,6 +17,7 @@ type SearchContextType = {
 	totalResultsCount: number;
 	selectedEntity: SearchResult | null;
 	setSelectedEntity: (entity: SearchResult | null) => void;
+	hasError: boolean;
 };
 
 const SEARCH_DEBOUNCE_MS = 300;
@@ -30,6 +31,7 @@ function useSearchState() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [results, setResults] = useState<SearchResult[]>([]);
 	const [totalResultsCount, setTotalResultsCount] = useState(0);
+	const [hasError, setHasError] = useState(false);
 	const [debouncedQuery] = useDebounce(query.trim(), SEARCH_DEBOUNCE_MS);
 
 	useEffect(() => {
@@ -55,6 +57,7 @@ function useSearchState() {
 				console.error('Search failed:', error);
 				setResults([]);
 				setTotalResultsCount(0);
+				setHasError(true);
 			} finally {
 				setIsLoading(false);
 			}
@@ -69,6 +72,7 @@ function useSearchState() {
 		isLoading,
 		results,
 		totalResultsCount,
+		hasError,
 	};
 }
 
@@ -77,7 +81,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 		null
 	);
 	const { isOpen, openSearch, closeSearch } = useSearchToggle();
-	const { query, setQuery, isLoading, results, totalResultsCount } =
+	const { query, setQuery, isLoading, results, totalResultsCount, hasError } =
 		useSearchState();
 	const { selectedIndex, setSelectedIndex } = useSearchNavigation(
 		isOpen,
@@ -106,6 +110,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 				totalResultsCount,
 				selectedEntity,
 				setSelectedEntity,
+				hasError,
 			}}
 		>
 			{children}

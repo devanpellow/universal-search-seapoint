@@ -8,12 +8,14 @@ export const withSearchProvider = ({
 	results = [],
 	query = '',
 	width = 'w-full',
+	hasError = false,
 }: {
 	isOpen?: boolean;
 	isLoading?: boolean;
 	results?: SearchResult[];
 	query?: string;
 	width?: string;
+	hasError?: boolean;
 } = {}) => {
 	return (Story: React.ComponentType) => {
 		return (
@@ -29,6 +31,9 @@ export const withSearchProvider = ({
 					selectedIndex: 0,
 					setSelectedIndex: () => {},
 					totalResultsCount: 0,
+					hasError,
+					selectedEntity: null,
+					setSelectedEntity: () => {},
 				}}
 			>
 				<div className={`${width}`}>

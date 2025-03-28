@@ -12,9 +12,12 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Boxes, Filter } from 'lucide-react';
 import { SearchResults } from './SearchResults';
 import { NoResults } from './ResultItems/NoResults';
+import { ErrorState } from './ResultItems/ErrorState';
+
 const SearchDialog = () => {
-	const { isOpen, closeSearch, query, isLoading, results } = useSearchContext();
-	const showHint = query.length === 0;
+	const { isOpen, closeSearch, query, isLoading, results, hasError } =
+		useSearchContext();
+	const showHint = query.length === 0 && !hasError && results.length === 0;
 	const showNoResults = !isLoading && query.length > 0 && results.length === 0;
 	const showLoading = isLoading && query.length > 0 && results.length === 0;
 
@@ -32,10 +35,11 @@ const SearchDialog = () => {
 					</DialogHeader>
 				</VisuallyHidden>
 				<SearchInput />
-				{showHint && <Hint />}
 				{results.length > 0 && <SearchResults />}
 				{showLoading && <Loading />}
 				{showNoResults && <NoResults />}
+				{showHint && <Hint />}
+				{hasError && <ErrorState />}
 			</DialogContent>
 		</Dialog>
 	);
