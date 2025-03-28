@@ -1,6 +1,6 @@
 import { Vendor } from '@/lib/types';
 import { HighlightedText } from '../helpers';
-import { Building, BriefcaseBusiness } from 'lucide-react';
+import { Building } from 'lucide-react';
 
 const VendorItem = (item: Vendor) => {
 	const { id, name, email } = item;
