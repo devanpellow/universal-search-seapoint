@@ -9,24 +9,28 @@ const VendorItem = (item: Vendor) => {
 			className="flex flex-col w-full hover:bg-muted border border-border p-2 rounded-md cursor-pointer"
 			key={id}
 			aria-labelledby={`vendor-${id}-name`}
+			role="article"
+			tabIndex={0}
 		>
 			<div className="flex justify-between">
 				<h3
 					id={`vendor-${id}-name`}
 					className="flex items-center text-lg font-semibold"
 				>
-					<span className="mr-2">
+					<span className="mr-2" aria-hidden="true">
 						<Building className="w-4 h-4" />
 					</span>
 					<HighlightedText text={name} />
 				</h3>
 				<p className="text-xs text-muted-foreground">
+					<span className="sr-only">Vendor ID:</span>
 					<span aria-hidden="true">ID: </span>
 					<HighlightedText text={id} />
 				</p>
 			</div>
 			<p className="text-sm text-muted-foreground">
 				<span className="sr-only">Email:</span>
+				<span aria-hidden="true">Email: </span>
 				<HighlightedText text={email} />
 			</p>
 		</div>

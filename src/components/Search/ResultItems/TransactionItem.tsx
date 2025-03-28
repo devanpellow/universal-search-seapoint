@@ -21,24 +21,33 @@ const TransactionItem = (item: Transaction) => {
 			className="flex flex-col w-full hover:bg-muted border border-border p-2 rounded-md cursor-pointer"
 			key={id}
 			aria-labelledby={`transaction-${id}-description`}
+			role="article"
+			tabIndex={0}
 		>
 			<div className="flex justify-between ">
 				<h3
 					id={`transaction-${id}-description`}
 					className="flex items-center text-lg font-semibold"
 				>
-					<span className="mr-2">
+					<span className="mr-2" aria-hidden="true">
 						<CreditCard className="w-4 h-4" />
 					</span>
 					<HighlightedText text={description} />
 				</h3>
 				<div className="flex items-center gap-2">
-					<span className="font-medium text-primary">
+					<span
+						className="font-medium text-primary"
+						aria-label={`Amount: ${formattedAmount}`}
+					>
 						<HighlightedText text={formattedAmount} />
 					</span>
 				</div>
 			</div>
-			<time dateTime={date} className="text-xs text-muted-foreground text-right">
+			<time
+				dateTime={date}
+				className="text-xs text-muted-foreground text-right"
+				aria-label={`Transaction date: ${formattedDate}`}
+			>
 				<HighlightedText text={formattedDate} />
 			</time>
 			<div className="flex justify-between">
