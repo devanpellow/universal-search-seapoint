@@ -66,6 +66,7 @@
 
 ### Next Steps / Future Improvements:
 
+- I would like to extract this component to some sort of design system so that it could be reusable across the application. For instance, logged in users might use the current implmenation but if we had pulic documentation for our APIs we could reuse the universal search for APIs. I would have to make the SearchProvider accept a search function, instead of having a hard-coded `searchEntities` function. 
 - Presist hint when prefix is being typed so users can see the hint while typing the prefix.
 - Add search by `id` to the search entities function.
 - Along with the hint, I would like to add query suggestions as the user types. Similar to how I have it in the no results state.
