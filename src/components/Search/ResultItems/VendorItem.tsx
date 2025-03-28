@@ -1,5 +1,6 @@
 import { Vendor } from '@/lib/types';
 import { HighlightedText } from '../helpers';
+import { Building, BriefcaseBusiness } from 'lucide-react';
 
 const VendorItem = (item: Vendor) => {
 	const { id, name, email } = item;
@@ -10,7 +11,13 @@ const VendorItem = (item: Vendor) => {
 			aria-labelledby={`vendor-${id}-name`}
 		>
 			<div className="flex justify-between">
-				<h3 id={`vendor-${id}-name`} className="text-lg font-semibold">
+				<h3
+					id={`vendor-${id}-name`}
+					className="flex items-center text-lg font-semibold"
+				>
+					<span className="mr-2">
+						<Building className="w-4 h-4" />
+					</span>
 					<HighlightedText text={name} />
 				</h3>
 				<p className="text-xs text-muted-foreground">

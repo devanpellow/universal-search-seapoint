@@ -1,5 +1,6 @@
 import { Transaction } from '@/lib/types';
 import { HighlightedText } from '../helpers';
+import { CreditCard } from 'lucide-react';
 
 const TransactionItem = (item: Transaction) => {
 	const { id, description, amount, date, vendorId } = item;
@@ -24,8 +25,11 @@ const TransactionItem = (item: Transaction) => {
 			<div className="flex justify-between ">
 				<h3
 					id={`transaction-${id}-description`}
-					className="text-lg font-semibold"
+					className="flex items-center text-lg font-semibold"
 				>
+					<span className="mr-2">
+						<CreditCard className="w-4 h-4" />
+					</span>
 					<HighlightedText text={description} />
 				</h3>
 				<div className="flex items-center gap-2">
@@ -34,7 +38,7 @@ const TransactionItem = (item: Transaction) => {
 					</span>
 				</div>
 			</div>
-			<time dateTime={date} className="text-xs text-muted-foreground text-left">
+			<time dateTime={date} className="text-xs text-muted-foreground text-right">
 				<HighlightedText text={formattedDate} />
 			</time>
 			<div className="flex justify-between">

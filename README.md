@@ -39,5 +39,10 @@ Assumptions/Expansions:
 - I expanded the mock data to include more entities to test the search functionality.
 - groupSearchResults will limit the number of items in each group to 5, so that the search function can be reused throughout the app and not limit the number of results.
 - I added a loading state when initally searching, but did not add a loading state when results are already shown to avoid flickering and results being showing with skeleton.
+- I added headings for each group of search results as well as an icon to show which type of entity. 
+- Instead of having the stories in a seperate folder, I added them to the component folder next to the component itself. This is to make it easier to find and modify the stories when the project grows. It's a practice we use at Pleo that seems to work well.
 
 
+Next Steps / Future Improvements:
+- Presist hint when prefix is used.
+- Add multiple prefixes to the search query, (vendor:email:john@doe.com).

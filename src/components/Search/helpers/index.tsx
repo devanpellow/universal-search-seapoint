@@ -108,9 +108,10 @@ export function useSearchToggle() {
 }
 
 const highlightText = (text: string, query: string) => {
-	if (!query) return text;
+	const queryWithoutPrefix = query.replace(/^[^:]+:\s*/, '');
+	if (!queryWithoutPrefix) return text;
 
-	const regex = new RegExp(`(${query})`, 'gi');
+	const regex = new RegExp(`(${queryWithoutPrefix})`, 'gi');
 	const parts = text.split(regex);
 
 	return parts.map((part, i) =>

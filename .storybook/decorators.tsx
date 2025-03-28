@@ -6,10 +6,12 @@ export const withSearchProvider = ({
 	isOpen = false,
 	isLoading = false,
 	results = [],
+	query = '',
 }: {
 	isOpen?: boolean;
 	isLoading?: boolean;
 	results?: SearchResult[];
+	query?: string;
 } = {}) => {
 	return (Story: React.ComponentType) => {
 		return (
@@ -18,7 +20,7 @@ export const withSearchProvider = ({
 					isOpen,
 					openSearch: () => {},
 					closeSearch: () => {},
-					query: '',
+					query,
 					setQuery: () => {},
 					isLoading,
 					results,
@@ -27,7 +29,9 @@ export const withSearchProvider = ({
 					totalResultsCount: 0,
 				}}
 			>
-				<Story />
+				<div className="w-md h-full">
+					<Story />
+				</div>
 			</SearchContext.Provider>
 		);
 	};
