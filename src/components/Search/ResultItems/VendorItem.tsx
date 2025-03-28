@@ -2,8 +2,11 @@ import { Vendor } from '@/lib/types';
 import { HighlightedText } from '../helpers';
 import { Building } from 'lucide-react';
 
-const VendorItem = (item: Vendor) => {
-	const { id, name, email } = item;
+interface VendorItemProps extends Vendor {
+	isSelected: boolean;
+}
+
+const VendorItem = ({ id, name, email, isSelected }: VendorItemProps) => {
 	return (
 		<div
 			className="flex flex-col w-full hover:bg-muted border border-border p-2 rounded-md cursor-pointer"
@@ -28,11 +31,22 @@ const VendorItem = (item: Vendor) => {
 					<HighlightedText text={id} />
 				</p>
 			</div>
-			<p className="text-sm text-muted-foreground">
-				<span className="sr-only">Email:</span>
-				<span aria-hidden="true">Email: </span>
-				<HighlightedText text={email} />
-			</p>
+			<div className="flex justify-between mt-1">
+				<p className="text-sm text-muted-foreground">
+					<span aria-hidden="true" className="sr-only">
+						Email:
+					</span>
+					<HighlightedText text={email} />
+				</p>
+				{isSelected && (
+					<div className="text-xs text-muted-foreground flex justify-end">
+						<kbd className="px-1.5 py-0.5 bg-muted border border-border rounded text-[10px]">
+							Enter
+						</kbd>
+						<span className="ml-1">to view details</span>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };

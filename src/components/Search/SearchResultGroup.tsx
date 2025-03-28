@@ -55,7 +55,7 @@ function SearchResultGroup({ group, startIndex }: SearchResultGroupProps) {
 						}
 					}}
 				>
-					<VendorItem {...(item as Vendor)} />
+					<VendorItem {...(item as Vendor)} isSelected={isSelected} />
 				</div>
 			);
 		}
@@ -77,7 +77,7 @@ function SearchResultGroup({ group, startIndex }: SearchResultGroupProps) {
 					}
 				}}
 			>
-				<TransactionItem {...(item as Transaction)} />
+				<TransactionItem {...(item as Transaction)} isSelected={isSelected} />
 			</div>
 		);
 	};

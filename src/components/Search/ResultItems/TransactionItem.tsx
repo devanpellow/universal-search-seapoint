@@ -2,9 +2,18 @@ import { Transaction } from '@/lib/types';
 import { HighlightedText } from '../helpers';
 import { CreditCard } from 'lucide-react';
 
-const TransactionItem = (item: Transaction) => {
-	const { id, description, amount, date, vendorId } = item;
+interface TransactionItemProps extends Transaction {
+	isSelected: boolean;
+}
 
+const TransactionItem = ({
+	id,
+	description,
+	amount,
+	date,
+	vendorId,
+	isSelected,
+}: TransactionItemProps) => {
 	const formattedAmount = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'USD',
@@ -50,17 +59,20 @@ const TransactionItem = (item: Transaction) => {
 			>
 				<HighlightedText text={formattedDate} />
 			</time>
-			<div className="flex justify-between">
+			<div className="flex justify-between mt-1">
 				<p className="text-sm text-muted-foreground">
 					<span className="sr-only">Vendor ID:</span>
-					<span aria-hidden="true">Vendor: </span>
+					<span aria-hidden="true">Vendor:</span>
 					<HighlightedText text={vendorId} />
 				</p>
-				<p className="text-xs text-muted-foreground">
-					<span className="sr-only">Transaction ID:</span>
-					<span aria-hidden="true">ID: </span>
-					<HighlightedText text={id} />
-				</p>
+				{isSelected && (
+					<div className="text-xs text-muted-foreground flex justify-end">
+						<kbd className="px-1.5 py-0.5 bg-muted border border-border rounded text-[10px]">
+							Enter
+						</kbd>
+						<span className="ml-1">to view details</span>
+					</div>
+				)}
 			</div>
 		</div>
 	);

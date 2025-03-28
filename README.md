@@ -1,4 +1,13 @@
-Implementation Plan:
+# Universal Search Component
+
+## Setup
+
+- Clone the repository
+- Run `pnpm install` to install the dependencies
+- Run `pnpm run dev` to start the development server
+- Run `pnpm run storybook` to start the storybook server
+
+## My Implementation Plan:
 
 Step 1:
 
@@ -51,3 +60,58 @@ Next Steps / Future Improvements:
 - Presist hint when prefix is used.
 - Add multiple prefixes to the search query, (vendor:email:john@doe.com).
 - When a user selects an entity/resource, we direct the user to that resource in the app.
+
+
+
+## Core Features Checklist
+
+1. Search popup triggered by:
+    - Pressing Ctrl/Cmd + K ✅
+    - Pressing the '/' key ✅
+    - Clicking a search icon in the header ✅
+2. Search Interface:
+    - Search input field with auto-focus when opened ✅
+    - Results grouped by entity type (example Vendors, Transactions) ✅
+    - Support keyboard navigation (up/down arrows, enter to select) ✅
+    - Close on Escape key or clicking outside ✅
+    - Show loading state while searching ✅
+3. Search Results:
+    - Display up to 5 results per entity type ✅
+    - Each result should show:
+        - Entity type icon/badge ✅
+        - Primary text (name/title) ✅
+        - Secondary text (e.g., amount for transactions, email for vendors) ✅
+
+### Bonus Features (Optional)
+
+- Search result highlighting ✅
+- Fuzzy search 
+- Search filters using commands (e.g., "vendor:", "transaction:") ✅
+- Keyboard shortcuts shown next to actions ✅
+
+
+## Evaluation Criteria
+
+1. Code organisation and component structure
+2. TypeScript usage and type safety
+3. Keyboard interaction implementation
+4. Search result rendering and performance
+5. Error handling and edge cases
+6. Code readability and documentation
+
+## Submission
+
+1. Code
+2. Brief documentation of:
+    - Setup instructions
+    - Any assumptions made
+    - Potential improvements with more time
+3. Submit as a GitHub repository or a zip file
+
+## Tips
+
+- Focus on core functionality first
+- Handle basic error cases
+- Keep the UI simple but polished
+- Add comments for complex logic
+- Consider accessibility
