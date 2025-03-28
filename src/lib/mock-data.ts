@@ -1,6 +1,5 @@
 import { Transaction, Vendor } from './types';
 
-// Mock data
 export const vendors: Vendor[] = [
 	{ id: 'v1', name: 'Apple Inc', email: 'payments@apple.com', type: 'vendor' },
 	{ id: 'v2', name: 'Amazon', email: 'billing@amazon.com', type: 'vendor' },
