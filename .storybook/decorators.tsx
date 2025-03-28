@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchContext } from '../src/components/Search/SearchProvider';
 import { SearchResult } from '../src/lib/types';
+
 export const withSearchProvider = ({
 	isOpen = false,
 	isLoading = false,

@@ -14,6 +14,7 @@ import { SearchResults } from './SearchResults';
 const SearchDialog = () => {
 	const { isOpen, closeSearch, query, isLoading, results } = useSearchContext();
 	const showHint = query.length === 0;
+	const showLoading = isLoading && query.length > 0 && results.length === 0;
 
 	return (
 		<Dialog open={isOpen} onOpenChange={closeSearch}>
@@ -30,7 +31,7 @@ const SearchDialog = () => {
 				</VisuallyHidden>
 				<SearchInput />
 				{showHint && <Hint />}
-				{isLoading && <Loading />}
+				{showLoading && <Loading />}
 				{results.length > 0 && <SearchResults />}
 			</DialogContent>
 		</Dialog>
@@ -53,7 +54,7 @@ const Hint = () => {
 						</span>
 					</div>
 					<div className="flex items-center gap-2 p-2 rounded-md">
-						<Boxes className="h-4 w-4 text-muted-foreground" />
+						<Boxes className="h-5 w-5 text-muted-foreground" />
 						<span>
 							Filter by properties <code className="text-blue-400">name:</code>
 							{' or '}

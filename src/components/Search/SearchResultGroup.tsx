@@ -11,9 +11,9 @@ function SearchResultGroup({ group }: SearchResultGroupProps) {
 
 	const renderItem = (item: SearchResult) => {
 		if (item.type === 'vendor') {
-			return <VendorItem {...(item as Vendor)} />;
+			return <VendorItem {...(item as Vendor)} key={item.id} />;
 		}
-		return <TransactionItem {...(item as Transaction)} />;
+		return <TransactionItem {...(item as Transaction)} key={item.id} />;
 	};
 
 	return (

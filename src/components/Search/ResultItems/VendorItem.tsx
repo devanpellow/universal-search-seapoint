@@ -1,14 +1,27 @@
 import { Vendor } from '@/lib/types';
+import { HighlightedText } from '../helpers';
 
 const VendorItem = (item: Vendor) => {
 	const { id, name, email } = item;
 	return (
-		<div className="flex flex-col gap-4" key={id}>
-			<div className="flex flex-col gap-2">
-				<h3 className="text-lg font-semibold">{name}</h3>
-				<p className="text-sm text-muted-foreground">{email}</p>
+		<div
+			className="flex flex-col w-full hover:bg-muted border border-border p-2 rounded-md cursor-pointer"
+			key={id}
+			aria-labelledby={`vendor-${id}-name`}
+		>
+			<div className="flex justify-between">
+				<h3 id={`vendor-${id}-name`} className="text-lg font-semibold">
+					<HighlightedText text={name} />
+				</h3>
+				<p className="text-xs text-muted-foreground">
+					<span aria-hidden="true">ID: </span>
+					<HighlightedText text={id} />
+				</p>
 			</div>
-			<p className="text-sm text-muted-foreground">{id}</p>
+			<p className="text-sm text-muted-foreground">
+				<span className="sr-only">Email:</span>
+				<HighlightedText text={email} />
+			</p>
 		</div>
 	);
 };

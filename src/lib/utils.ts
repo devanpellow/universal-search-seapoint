@@ -7,7 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function groupSearchResults(items: SearchResult[]): ResultGroup[] {
+export function groupSearchResults(
+	items: SearchResult[],
+	limit: number = 5
+): ResultGroup[] {
 	const groupedItems: Record<string, SearchResult[]> = {};
 
 	items.forEach((item) => {
@@ -25,6 +28,6 @@ export function groupSearchResults(items: SearchResult[]): ResultGroup[] {
 		label:
 			GROUP_LABELS[type as ResultGroupType] ||
 			`${type.charAt(0).toUpperCase()}${type.slice(1)}s`,
-		items: groupedItems[type],
+		items: groupedItems[type].slice(0, limit),
 	}));
 }
