@@ -1,8 +1,9 @@
 import { searchEntities } from '@/lib/search-entities';
 import { SearchResult } from '@/lib/types';
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { useSearchNavigation, useSearchToggle } from './helpers';
 import { useDebounce } from 'use-debounce';
+import { useSearchNavigation } from './hooks/useSearchNavigation';
+import { useSearchToggle } from './hooks/useSearchToggle';
 
 type SearchContextType = {
 	isOpen: boolean;

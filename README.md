@@ -69,7 +69,8 @@
 - When a user selects an entity/resource, we direct the user to that resource in the app. For now I just show the JSON object in the UI.
 - A potential improvement might be adding virtualization for handling very large result sets, though this may be unnecessary for the current scale.
 - Covering the component with tests, unit and integration tests using RTL and Jest.
-- Implement fuzzy search. To do this I could use a library like https://www.fusejs.io/. 
+- Implement fuzzy search. To do this I could use a library like https://www.fusejs.io/.
+- Currently my highlighting will remove space between strings if I search for a query that is mid-string. Like `cloud` in `Google Cloud Platform`. I would need to improve this.
 
 ## Core Features Checklist
 
