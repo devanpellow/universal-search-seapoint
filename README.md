@@ -7,6 +7,10 @@
 - Run `pnpm run dev` to start the development server
 - Run `pnpm run storybook` to start the storybook server
 
+## Demo
+
+[Link to live demo](https://universal-search-component-demo.vercel.app/)
+
 ## My Implementation Plan:
 
 ### 1. Project Setup
