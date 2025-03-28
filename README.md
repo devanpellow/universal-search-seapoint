@@ -38,6 +38,6 @@ Assumptions/Expansions:
 - We will have different groups of search results in the future.
 - I expanded the mock data to include more entities to test the search functionality.
 - groupSearchResults will limit the number of items in each group to 5, so that the search function can be reused throughout the app and not limit the number of results.
-
+- I added a loading state when initally searching, but did not add a loading state when results are already shown to avoid flickering and results being showing with skeleton.
 
 

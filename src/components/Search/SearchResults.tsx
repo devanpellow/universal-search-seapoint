@@ -6,7 +6,6 @@ const SearchResults = () => {
 	const { results } = useSearchContext();
 	const groups = groupSearchResults(results);
 
-	// Calculate start index for each group
 	let currentStartIndex = 0;
 
 	return (

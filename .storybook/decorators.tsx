@@ -22,6 +22,9 @@ export const withSearchProvider = ({
 					setQuery: () => {},
 					isLoading,
 					results,
+					selectedIndex: 0,
+					setSelectedIndex: () => {},
+					totalResultsCount: 0,
 				}}
 			>
 				<Story />
