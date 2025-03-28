@@ -1,13 +1,15 @@
 import './App.css';
 import { SearchDialog } from './components/Search/SearchDialog';
 import { SearchProvider } from './components/Search/SearchProvider';
-import { SearchTriggerButton } from './components/Search/SearchTriggerButton';
+import { NavBar } from './components/NavBar';
+import { SelectedEntity } from './components/SelectedEntity';
 function App() {
 	return (
-		<div className="flex flex-col items-center justify-center min-h-svh">
+		<div className="min-h-screen w-full bg-[url('/splash.svg')] bg-cover bg-center bg-no-repeat">
 			<SearchProvider>
-				<SearchTriggerButton />
+				<NavBar />
 				<SearchDialog />
+				<SelectedEntity />
 			</SearchProvider>
 		</div>
 	);

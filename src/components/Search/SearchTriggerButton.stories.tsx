@@ -14,3 +14,16 @@ export const Default: Story = {
 	decorators: [withSearchProvider({ isOpen: false })],
 };
 
+export const Tablet: Story = {
+	decorators: [withSearchProvider({ isOpen: false, width: 'max-w-64' })],
+	parameters: {
+		viewport: { defaultViewport: 'tablet' },
+	},
+};
+
+export const Mobile: Story = {
+	decorators: [withSearchProvider({ isOpen: false, width: 'max-w-40' })],
+	parameters: {
+		viewport: { defaultViewport: 'mobile1' },
+	},
+};

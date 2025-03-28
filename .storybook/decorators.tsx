@@ -7,11 +7,13 @@ export const withSearchProvider = ({
 	isLoading = false,
 	results = [],
 	query = '',
+	width = 'w-full',
 }: {
 	isOpen?: boolean;
 	isLoading?: boolean;
 	results?: SearchResult[];
 	query?: string;
+	width?: string;
 } = {}) => {
 	return (Story: React.ComponentType) => {
 		return (
@@ -29,7 +31,7 @@ export const withSearchProvider = ({
 					totalResultsCount: 0,
 				}}
 			>
-				<div className="w-md h-full">
+				<div className={`${width}`}>
 					<Story />
 				</div>
 			</SearchContext.Provider>

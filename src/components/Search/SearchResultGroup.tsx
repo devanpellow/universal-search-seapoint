@@ -14,8 +14,13 @@ const focusedStyles =
 
 function SearchResultGroup({ group, startIndex }: SearchResultGroupProps) {
 	const { items, label } = group;
-	const { selectedIndex } = useSearchContext();
+	const { selectedIndex, setSelectedEntity, closeSearch } = useSearchContext();
 	const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+	const handleSelectEntity = (item: SearchResult) => {
+		setSelectedEntity(item);
+		closeSearch();
+	};
 
 	useEffect(() => {
 		const localIndex = selectedIndex - startIndex;
@@ -43,6 +48,12 @@ function SearchResultGroup({ group, startIndex }: SearchResultGroupProps) {
 					data-selected={isSelected}
 					key={item.id}
 					className={focusedStyles}
+					onClick={() => handleSelectEntity(item)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							handleSelectEntity(item);
+						}
+					}}
 				>
 					<VendorItem {...(item as Vendor)} />
 				</div>
@@ -59,6 +70,12 @@ function SearchResultGroup({ group, startIndex }: SearchResultGroupProps) {
 				data-selected={isSelected}
 				key={item.id}
 				className={focusedStyles}
+				onClick={() => handleSelectEntity(item)}
+				onKeyDown={(e) => {
+					if (e.key === 'Enter') {
+						handleSelectEntity(item);
+					}
+				}}
 			>
 				<TransactionItem {...(item as Transaction)} />
 			</div>

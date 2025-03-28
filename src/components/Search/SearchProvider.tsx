@@ -15,6 +15,8 @@ type SearchContextType = {
 	selectedIndex: number;
 	setSelectedIndex: (index: number) => void;
 	totalResultsCount: number;
+	selectedEntity: SearchResult | null;
+	setSelectedEntity: (entity: SearchResult | null) => void;
 };
 
 const SEARCH_DEBOUNCE_MS = 300;
@@ -28,7 +30,6 @@ function useSearchState() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [results, setResults] = useState<SearchResult[]>([]);
 	const [totalResultsCount, setTotalResultsCount] = useState(0);
-
 	const [debouncedQuery] = useDebounce(query.trim(), SEARCH_DEBOUNCE_MS);
 
 	useEffect(() => {
@@ -72,6 +73,9 @@ function useSearchState() {
 }
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
+	const [selectedEntity, setSelectedEntity] = useState<SearchResult | null>(
+		null
+	);
 	const { isOpen, openSearch, closeSearch } = useSearchToggle();
 	const { query, setQuery, isLoading, results, totalResultsCount } =
 		useSearchState();
@@ -100,6 +104,8 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 				selectedIndex,
 				setSelectedIndex,
 				totalResultsCount,
+				selectedEntity,
+				setSelectedEntity,
 			}}
 		>
 			{children}
