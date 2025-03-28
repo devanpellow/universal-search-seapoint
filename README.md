@@ -59,6 +59,8 @@ Step 6:
 - Presist hint when prefix is used so users can see the hint while typing the prefix.
 - Chain multiple prefixes to the search query, (vendor:email:john@doe.com).
 - When a user selects an entity/resource, we direct the user to that resource in the app. For now I just show the JSON object in the UI.
+- A potential improvement might be adding virtualization for handling very large result sets, though this may be unnecessary for the current scale.
+- Covering the component with tests, unit and integration tests using RTL and Jest.
 
 
 

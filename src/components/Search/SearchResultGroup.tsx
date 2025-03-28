@@ -2,7 +2,14 @@ import { useEffect, useRef } from 'react';
 import { useSearchContext } from './SearchProvider';
 import { VendorItem } from './ResultItems/VendorItem';
 import { TransactionItem } from './ResultItems/TransactionItem';
-import { ResultGroup, SearchResult, Transaction, Vendor } from '@/lib/types';
+import {
+	isTransaction,
+	isVendor,
+	ResultGroup,
+	SearchResult,
+	Transaction,
+	Vendor,
+} from '@/lib/types';
 
 interface SearchResultGroupProps {
 	group: ResultGroup;
@@ -36,7 +43,7 @@ function SearchResultGroup({ group, startIndex }: SearchResultGroupProps) {
 	const renderItem = (item: SearchResult, index: number) => {
 		const isSelected = startIndex + index === selectedIndex;
 
-		if (item.type === 'vendor') {
+		if (isVendor(item)) {
 			return (
 				<div
 					ref={(el) => {
@@ -59,27 +66,31 @@ function SearchResultGroup({ group, startIndex }: SearchResultGroupProps) {
 				</div>
 			);
 		}
-		return (
-			<div
-				ref={(el) => {
-					if (el) {
-						itemRefs.current[index] = el;
-					}
-				}}
-				tabIndex={isSelected ? 0 : -1}
-				data-selected={isSelected}
-				key={item.id}
-				className={focusedStyles}
-				onClick={() => handleSelectEntity(item)}
-				onKeyDown={(e) => {
-					if (e.key === 'Enter') {
-						handleSelectEntity(item);
-					}
-				}}
-			>
-				<TransactionItem {...(item as Transaction)} isSelected={isSelected} />
-			</div>
-		);
+		if (isTransaction(item)) {
+			return (
+				<div
+					ref={(el) => {
+						if (el) {
+							itemRefs.current[index] = el;
+						}
+					}}
+					tabIndex={isSelected ? 0 : -1}
+					data-selected={isSelected}
+					key={item.id}
+					className={focusedStyles}
+					onClick={() => handleSelectEntity(item)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							handleSelectEntity(item);
+						}
+					}}
+				>
+					<TransactionItem {...(item as Transaction)} isSelected={isSelected} />
+				</div>
+			);
+		}
+
+		return null;
 	};
 
 	return (

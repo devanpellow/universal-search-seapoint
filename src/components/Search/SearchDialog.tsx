@@ -5,7 +5,6 @@ import {
 	DialogTitle,
 	DialogDescription,
 } from '@/components/ui/dialog';
-import { useSearchContext } from './SearchProvider';
 import { SearchInput } from './SearchInput';
 import { Skeleton } from '@/components/ui/skeleton';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
@@ -13,13 +12,18 @@ import { Boxes, Filter } from 'lucide-react';
 import { SearchResults } from './SearchResults';
 import { NoResults } from './ResultItems/NoResults';
 import { ErrorState } from './ResultItems/ErrorState';
+import { useSearchDialogState } from './hooks/useSearchDialogState';
 
 const SearchDialog = () => {
-	const { isOpen, closeSearch, query, isLoading, results, hasError } =
-		useSearchContext();
-	const showHint = query.length === 0 && !hasError && results.length === 0;
-	const showNoResults = !isLoading && query.length > 0 && results.length === 0;
-	const showLoading = isLoading && query.length > 0 && results.length === 0;
+	const {
+		isOpen,
+		closeSearch,
+		showResults,
+		showLoading,
+		showNoResults,
+		showHint,
+		hasError,
+	} = useSearchDialogState();
 
 	return (
 		<Dialog open={isOpen} onOpenChange={closeSearch}>
@@ -35,7 +39,7 @@ const SearchDialog = () => {
 					</DialogHeader>
 				</VisuallyHidden>
 				<SearchInput />
-				{results.length > 0 && <SearchResults />}
+				{showResults && <SearchResults />}
 				{showLoading && <Loading />}
 				{showNoResults && <NoResults />}
 				{showHint && <Hint />}
