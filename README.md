@@ -75,6 +75,7 @@
 - Covering the component with tests, unit and integration tests using RTL and Jest.
 - Implement fuzzy search. To do this I could use a library like https://www.fusejs.io/.
 - Currently my highlighting will remove space between strings if I search for a query that is mid-string. Like `cloud` in `Google Cloud Platform`. I would need to improve this.
+- Since the transactions contain a vendorId, I could have added a vendor name to the transaction object. Although a FE request for this would increase latency so it would be better to apply this on the backend.
 
 ## Core Features Checklist
 
@@ -101,6 +102,7 @@
 - Fuzzy search
 - Search filters using commands (e.g., "vendor:", "transaction:") ✅
 - Keyboard shortcuts shown next to actions ✅
+  - When element is focused, I show to the user that hitting enter will select the element.
 
 ## Mock Data For Testing
 
