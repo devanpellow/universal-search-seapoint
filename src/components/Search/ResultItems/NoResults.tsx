@@ -14,19 +14,19 @@ const NoResults = () => {
 			</p>
 
 			<div className="flex">
-				<button
+				<code
 					onClick={() => setQuery('vendor:')}
 					className="text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-ring rounded px-2"
 				>
 					Vendors
-				</button>
+				</code>
 				<span className="text-muted-foreground">or</span>
-				<button
+				<code
 					onClick={() => setQuery('transaction:')}
 					className="text-blue-500 hover:underline focus:outline-none focus:ring-2 focus:ring-ring rounded px-2"
 				>
 					Transactions
-				</button>
+				</code>
 			</div>
 		</div>
 	);

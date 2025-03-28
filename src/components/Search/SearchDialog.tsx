@@ -53,6 +53,8 @@ const SearchDialog = () => {
 export { SearchDialog };
 
 const Hint = () => {
+	const { setQuery } = useSearchDialogState();
+	const hintStyle = 'text-blue-400 cursor-pointer hover:underline';
 	return (
 		<div className="space-y-4 p-1">
 			<div>
@@ -61,20 +63,53 @@ const Hint = () => {
 					<div className="flex items-center gap-2 p-2 rounded-md">
 						<Filter className="h-4 w-4 text-muted-foreground" />
 						<span>
-							Prefix search with <code className="text-blue-400">vendor:</code>{' '}
-							or <code className="text-blue-400">transaction:</code>
+							Prefix search with{' '}
+							<code
+								className={hintStyle}
+								onClick={() => setQuery('vendor:')}
+							>
+								vendor:
+							</code>{' '}
+							or{' '}
+							<code
+								className={hintStyle}
+								onClick={() => setQuery('transaction:')}
+							>
+								transaction:
+							</code>
 						</span>
 					</div>
 					<div className="flex items-center gap-2 p-2 rounded-md">
 						<Boxes className="h-5 w-5 text-muted-foreground" />
 						<span>
-							Filter by properties <code className="text-blue-400">name:</code>
+							Filter by properties{' '}
+							<code
+								className={hintStyle}
+								onClick={() => setQuery('name:')}
+							>
+								name:
+							</code>
 							{' or '}
-							<code className="text-blue-400">email:</code>
+							<code
+								className={hintStyle}
+								onClick={() => setQuery('email:')}
+							>
+								email:
+							</code>
 							{' or '}
-							<code className="text-blue-400">description:</code>
+							<code
+								className={hintStyle}
+								onClick={() => setQuery('description:')}
+							>
+								description:
+							</code>
 							{' or '}
-							<code className="text-blue-400">amount:</code>
+							<code
+								className={hintStyle}
+								onClick={() => setQuery('amount:')}
+							>
+								amount:
+							</code>
 						</span>
 					</div>
 				</div>

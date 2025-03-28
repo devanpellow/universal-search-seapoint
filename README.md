@@ -58,10 +58,12 @@
 - I added a loading state when initally searching, but did not reapply the loading state when some results are already shown. This is to avoid flickering and results being showing above a skeleton.
 - I added headings for each group of search results as well as an icon to show which type of entity. It's mentioned in the task that icons should indicate the type of entity. However, I chose to keep the labels as well to show the dynamic labelling of the results.
 - Instead of having the storybook stories in a seperate folder, I added them to the component folder next to the component itself. This is to make it easier to find and modify the stories when the project grows. It's a practice we use at Pleo that seems to work well.
+- A question for designers would be if I type `vendor:` should it show the first 5 vendors or should it wait for the user to type more characters? Currently it shows the first 5 vendors. Same for transactions, and other prefixes.
 
 ### Next Steps / Future Improvements:
 
 - Presist hint when prefix is being typed so users can see the hint while typing the prefix.
+- Add search by `id` to the search entities function.
 - Along with the hint, I would like to add query suggestions as the user types. Similar to how I have it in the no results state.
 - Chain multiple prefixes to the search query, (vendor:email:john@doe.com).
 - When a user selects an entity/resource, we direct the user to that resource in the app. For now I just show the JSON object in the UI.

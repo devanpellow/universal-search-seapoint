@@ -1,7 +1,7 @@
 import { useSearchContext } from '../SearchProvider';
 
 export function useSearchDialogState() {
-	const { isOpen, closeSearch, query, isLoading, results, hasError } =
+	const { isOpen, closeSearch, query, isLoading, results, hasError, setQuery } =
 		useSearchContext();
 
 	return {
@@ -14,5 +14,6 @@ export function useSearchDialogState() {
 		showNoResults: !isLoading && query.length > 0 && results.length === 0,
 		showLoading: isLoading && query.length > 0 && results.length === 0,
 		results,
+		setQuery,
 	};
 }
