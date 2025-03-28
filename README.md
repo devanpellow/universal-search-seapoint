@@ -9,14 +9,12 @@
 
 ## My Implementation Plan:
 
-## Implementation Process
-
 ### 1. Project Setup
 
 - Initialized project using Vite with React and TypeScript
-- Set up development environment with Storybook for component development
 - Installed dependencies such as storybook, tailwind, use-debounce, and shadcn.
-- Configured Tailwind CSS for styling and shadcn/ui for accessible UI components
+- Set up TailwindCSS for styling and shadcn/ui for accessible UI components
+- Set up development environment with Storybook, ensuring styles are applied correctly in Storybook.
 - Established project structure and code organization patterns
 
 ### 2. Design Approach
@@ -57,19 +55,19 @@
   - We will have different groups of search results in the future. Hence why the groupings are labeled for readability.
 - I expanded the mock data to include more entities to test the search functionality.
 - `groupSearchResults` will limit the number of items in each group to 5. The original search entities function could also could be passed a limit.
-- I added a loading state when initally searching, but did not add a loading state when results are already shown and we add to the search results to avoid flickering and results being showing above a skeleton.
-- I added headings for each group of search results as well as an icon to show which type of entity. It's mentioned in the task that icons should indicated the type of entity. I chose to keep the labels as well to show the dynamic labelling of the results.
-- Instead of having the stories in a seperate folder, I added them to the component folder next to the component itself. This is to make it easier to find and modify the stories when the project grows. It's a practice we use at Pleo that seems to work well.
+- I added a loading state when initally searching, but did not reapply the loading state when some results are already shown. This is to avoid flickering and results being showing above a skeleton.
+- I added headings for each group of search results as well as an icon to show which type of entity. It's mentioned in the task that icons should indicate the type of entity. However, I chose to keep the labels as well to show the dynamic labelling of the results.
+- Instead of having the storybook stories in a seperate folder, I added them to the component folder next to the component itself. This is to make it easier to find and modify the stories when the project grows. It's a practice we use at Pleo that seems to work well.
 
 ### Next Steps / Future Improvements:
 
-- Presist hint when prefix is used so users can see the hint while typing the prefix.
+- Presist hint when prefix is being typed so users can see the hint while typing the prefix.
 - Along with the hint, I would like to add query suggestions as the user types. Similar to how I have it in the no results state.
 - Chain multiple prefixes to the search query, (vendor:email:john@doe.com).
 - When a user selects an entity/resource, we direct the user to that resource in the app. For now I just show the JSON object in the UI.
 - A potential improvement might be adding virtualization for handling very large result sets, though this may be unnecessary for the current scale.
 - Covering the component with tests, unit and integration tests using RTL and Jest.
-- Implement fuzzy search. To do this I could use a library like https://www.fusejs.io/.
+- Implement fuzzy search. To do this I could use a library like https://www.fusejs.io/. 
 
 ## Core Features Checklist
 
