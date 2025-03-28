@@ -7,7 +7,7 @@ export const withSearchProvider = ({
 	isLoading = false,
 	results = [],
 	query = '',
-	width = 'w-full',
+	width = 'w-md',
 	hasError = false,
 }: {
 	isOpen?: boolean;
