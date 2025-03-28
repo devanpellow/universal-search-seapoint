@@ -6,11 +6,28 @@ const SearchResults = () => {
 	const { results } = useSearchContext();
 	const groups = groupSearchResults(results);
 
+	// Calculate start index for each group
+	let currentStartIndex = 0;
+
 	return (
-		<div className="flex flex-col gap-4">
-			{groups.map((group) => (
-				<SearchResultGroup key={group.id} group={group} />
-			))}
+		<div
+			className="flex flex-col gap-4"
+			id="search-results"
+			role="listbox"
+			aria-label="Search results"
+		>
+			{groups.map((group) => {
+				const startIndex = currentStartIndex;
+				currentStartIndex += group.items.length;
+
+				return (
+					<SearchResultGroup
+						key={group.id}
+						group={group}
+						startIndex={startIndex}
+					/>
+				);
+			})}
 		</div>
 	);
 };

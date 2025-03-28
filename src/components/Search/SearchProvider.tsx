@@ -17,6 +17,9 @@ type SearchContextType = {
 	setQuery: (query: string) => void;
 	isLoading: boolean;
 	results: SearchResult[];
+	selectedIndex: number;
+	setSelectedIndex: (index: number) => void;
+	totalResultsCount: number;
 };
 
 export const SearchContext = createContext<SearchContextType | undefined>(
@@ -28,6 +31,8 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 	const [query, setQuery] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [results, setResults] = useState<SearchResult[]>([]);
+	const [selectedIndex, setSelectedIndex] = useState(-1);
+	const [totalResultsCount, setTotalResultsCount] = useState(0);
 
 	const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -38,6 +43,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 	const closeSearch = useCallback(() => {
 		setIsOpen(false);
 		setQuery('');
+		setSelectedIndex(-1);
 	}, []);
 
 	useEffect(() => {
@@ -70,6 +76,8 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 		if (!query.trim()) {
 			setResults([]);
 			setIsLoading(false);
+			setSelectedIndex(-1);
+			setTotalResultsCount(0);
 			return;
 		}
 
@@ -99,6 +107,74 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 		};
 	}, [query]);
 
+	useEffect(() => {
+		if (!query.trim()) {
+			setResults([]);
+			setIsLoading(false);
+			setSelectedIndex(-1);
+			setTotalResultsCount(0);
+			return;
+		}
+
+		// ... existing code ...
+	}, [query]);
+
+	// Calculate total results count when results change
+	useEffect(() => {
+		setTotalResultsCount(results.length);
+		// Reset selection when results change
+		setSelectedIndex(-1);
+	}, [results]);
+
+	// Add keyboard navigation handler
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleKeyNavigation = (e: KeyboardEvent) => {
+			// Skip if search isn't open
+			if (!isOpen) return;
+
+			switch (e.key) {
+				case 'ArrowDown':
+					e.preventDefault();
+					setSelectedIndex((prev) =>
+						prev >= totalResultsCount - 1 ? -1 : prev + 1
+					);
+					break;
+				case 'ArrowUp':
+					e.preventDefault();
+					setSelectedIndex((prev) =>
+						prev <= -1 ? totalResultsCount - 1 : prev - 1
+					);
+					break;
+				case 'Tab':
+					// Allow Tab to navigate through results
+					if (!e.shiftKey) {
+						e.preventDefault();
+						setSelectedIndex((prev) =>
+							prev >= totalResultsCount - 1 ? -1 : prev + 1
+						);
+					} else {
+						e.preventDefault();
+						setSelectedIndex((prev) =>
+							prev <= -1 ? totalResultsCount - 1 : prev - 1
+						);
+					}
+					break;
+				case 'Enter':
+					// Handle Enter to select the current item
+					if (selectedIndex >= 0 && selectedIndex < totalResultsCount) {
+						e.preventDefault();
+						// This will be implemented in the SearchResults component
+					}
+					break;
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyNavigation);
+		return () => window.removeEventListener('keydown', handleKeyNavigation);
+	}, [isOpen, totalResultsCount, selectedIndex]);
+
 	return (
 		<SearchContext.Provider
 			value={{
@@ -109,6 +185,9 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 				setQuery,
 				isLoading,
 				results,
+				selectedIndex,
+				setSelectedIndex,
+				totalResultsCount,
 			}}
 		>
 			{children}
