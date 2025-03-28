@@ -1,9 +1,12 @@
+import { searchEntities } from '@/lib/search-entities';
+import { SearchResult } from '@/lib/types';
 import React, {
 	createContext,
 	useState,
 	useContext,
 	useEffect,
 	useCallback,
+	useRef,
 } from 'react';
 
 type SearchContextType = {
@@ -13,6 +16,7 @@ type SearchContextType = {
 	query: string;
 	setQuery: (query: string) => void;
 	isLoading: boolean;
+	results: SearchResult[];
 };
 
 export const SearchContext = createContext<SearchContextType | undefined>(
@@ -23,6 +27,9 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [query, setQuery] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
+	const [results, setResults] = useState<SearchResult[]>([]);
+
+	const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const openSearch = useCallback(() => {
 		setIsOpen(true);
@@ -59,6 +66,39 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 		return () => window.removeEventListener('keydown', handleKeyDown);
 	}, [isOpen, openSearch, closeSearch]);
 
+	useEffect(() => {
+		if (!query.trim()) {
+			setResults([]);
+			setIsLoading(false);
+			return;
+		}
+
+		setIsLoading(true);
+
+		// Debounce search requests
+		if (searchTimeoutRef.current) {
+			clearTimeout(searchTimeoutRef.current);
+		}
+
+		searchTimeoutRef.current = setTimeout(async () => {
+			try {
+				const searchResults = await searchEntities(query);
+				setResults(searchResults);
+			} catch (error) {
+				console.error('Search failed:', error);
+				setResults([]);
+			} finally {
+				setIsLoading(false);
+			}
+		}, 300);
+
+		return () => {
+			if (searchTimeoutRef.current) {
+				clearTimeout(searchTimeoutRef.current);
+			}
+		};
+	}, [query]);
+
 	return (
 		<SearchContext.Provider
 			value={{
@@ -68,6 +108,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
 				query,
 				setQuery,
 				isLoading,
+				results,
 			}}
 		>
 			{children}

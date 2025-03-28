@@ -10,7 +10,7 @@ const SearchInput = () => {
 				<Input
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
-					placeholder="Enter text"
+					placeholder="Search..."
 					className="pr-10"
 				/>
 

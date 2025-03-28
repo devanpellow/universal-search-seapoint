@@ -1,12 +1,14 @@
 import React from 'react';
 import { SearchContext } from '../src/components/Search/SearchProvider';
-
+import { SearchResult } from '../src/lib/types';
 export const withSearchProvider = ({
 	isOpen = false,
 	isLoading = false,
+	results = [],
 }: {
 	isOpen?: boolean;
 	isLoading?: boolean;
+	results?: SearchResult[];
 } = {}) => {
 	return (Story: React.ComponentType) => {
 		return (
@@ -18,6 +20,7 @@ export const withSearchProvider = ({
 					query: '',
 					setQuery: () => {},
 					isLoading,
+					results,
 				}}
 			>
 				<Story />

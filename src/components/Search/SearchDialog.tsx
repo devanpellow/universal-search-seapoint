@@ -10,9 +10,9 @@ import { SearchInput } from './SearchInput';
 import { Skeleton } from '@/components/ui/skeleton';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Boxes, Filter } from 'lucide-react';
-
+import { SearchResults } from './SearchResults';
 const SearchDialog = () => {
-	const { isOpen, closeSearch, query, isLoading } = useSearchContext();
+	const { isOpen, closeSearch, query, isLoading, results } = useSearchContext();
 	const showHint = query.length === 0;
 
 	return (
@@ -31,6 +31,7 @@ const SearchDialog = () => {
 				<SearchInput />
 				{showHint && <Hint />}
 				{isLoading && <Loading />}
+				{results.length > 0 && <SearchResults />}
 			</DialogContent>
 		</Dialog>
 	);
