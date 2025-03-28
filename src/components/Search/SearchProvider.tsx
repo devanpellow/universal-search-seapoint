@@ -1,13 +1,8 @@
 import { searchEntities } from '@/lib/search-entities';
 import { SearchResult } from '@/lib/types';
-import React, {
-	createContext,
-	useState,
-	useContext,
-	useEffect,
-	useCallback,
-	useRef,
-} from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { useSearchNavigation, useSearchToggle } from './helpers';
+import { useDebounce } from 'use-debounce';
 
 type SearchContextType = {
 	isOpen: boolean;
@@ -22,158 +17,75 @@ type SearchContextType = {
 	totalResultsCount: number;
 };
 
+const SEARCH_DEBOUNCE_MS = 300;
+
 export const SearchContext = createContext<SearchContextType | undefined>(
 	undefined
 );
 
-export function SearchProvider({ children }: { children: React.ReactNode }) {
-	const [isOpen, setIsOpen] = useState(false);
+function useSearchState() {
 	const [query, setQuery] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [results, setResults] = useState<SearchResult[]>([]);
-	const [selectedIndex, setSelectedIndex] = useState(-1);
 	const [totalResultsCount, setTotalResultsCount] = useState(0);
 
-	const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-	const openSearch = useCallback(() => {
-		setIsOpen(true);
-	}, []);
-
-	const closeSearch = useCallback(() => {
-		setIsOpen(false);
-		setQuery('');
-		setSelectedIndex(-1);
-	}, []);
+	const [debouncedQuery] = useDebounce(query.trim(), SEARCH_DEBOUNCE_MS);
 
 	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if ((e.metaKey || e.ctrlKey) && e.key === 'k' && !isOpen) {
-				e.preventDefault();
-				openSearch();
-			}
-
-			if (
-				e.key === '/' &&
-				!isOpen &&
-				!['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName || '')
-			) {
-				e.preventDefault();
-				openSearch();
-			}
-
-			if (e.key === 'Escape' && isOpen) {
-				e.preventDefault();
-				closeSearch();
-			}
-		};
-
-		window.addEventListener('keydown', handleKeyDown);
-		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, [isOpen, openSearch, closeSearch]);
+		if (query.trim() && query.trim() !== debouncedQuery) {
+			setIsLoading(true);
+		}
+	}, [query, debouncedQuery]);
 
 	useEffect(() => {
-		if (!query.trim()) {
+		if (!debouncedQuery) {
 			setResults([]);
 			setIsLoading(false);
-			setSelectedIndex(-1);
 			setTotalResultsCount(0);
 			return;
 		}
 
-		setIsLoading(true);
-
-		// Debounce search requests
-		if (searchTimeoutRef.current) {
-			clearTimeout(searchTimeoutRef.current);
-		}
-
-		searchTimeoutRef.current = setTimeout(async () => {
+		const fetchResults = async () => {
 			try {
-				const searchResults = await searchEntities(query);
+				const searchResults = await searchEntities(debouncedQuery);
 				setResults(searchResults);
+				setTotalResultsCount(searchResults.length);
 			} catch (error) {
 				console.error('Search failed:', error);
 				setResults([]);
+				setTotalResultsCount(0);
 			} finally {
 				setIsLoading(false);
 			}
-		}, 300);
-
-		return () => {
-			if (searchTimeoutRef.current) {
-				clearTimeout(searchTimeoutRef.current);
-			}
 		};
-	}, [query]);
+
+		fetchResults();
+	}, [debouncedQuery]);
+
+	return {
+		query,
+		setQuery,
+		isLoading,
+		results,
+		totalResultsCount,
+	};
+}
+
+export function SearchProvider({ children }: { children: React.ReactNode }) {
+	const { isOpen, openSearch, closeSearch } = useSearchToggle();
+	const { query, setQuery, isLoading, results, totalResultsCount } =
+		useSearchState();
+	const { selectedIndex, setSelectedIndex } = useSearchNavigation(
+		isOpen,
+		totalResultsCount
+	);
 
 	useEffect(() => {
-		if (!query.trim()) {
-			setResults([]);
-			setIsLoading(false);
+		if (!isOpen) {
+			setQuery('');
 			setSelectedIndex(-1);
-			setTotalResultsCount(0);
-			return;
 		}
-
-		// ... existing code ...
-	}, [query]);
-
-	// Calculate total results count when results change
-	useEffect(() => {
-		setTotalResultsCount(results.length);
-		// Reset selection when results change
-		setSelectedIndex(-1);
-	}, [results]);
-
-	// Add keyboard navigation handler
-	useEffect(() => {
-		if (!isOpen) return;
-
-		const handleKeyNavigation = (e: KeyboardEvent) => {
-			// Skip if search isn't open
-			if (!isOpen) return;
-
-			switch (e.key) {
-				case 'ArrowDown':
-					e.preventDefault();
-					setSelectedIndex((prev) =>
-						prev >= totalResultsCount - 1 ? -1 : prev + 1
-					);
-					break;
-				case 'ArrowUp':
-					e.preventDefault();
-					setSelectedIndex((prev) =>
-						prev <= -1 ? totalResultsCount - 1 : prev - 1
-					);
-					break;
-				case 'Tab':
-					// Allow Tab to navigate through results
-					if (!e.shiftKey) {
-						e.preventDefault();
-						setSelectedIndex((prev) =>
-							prev >= totalResultsCount - 1 ? -1 : prev + 1
-						);
-					} else {
-						e.preventDefault();
-						setSelectedIndex((prev) =>
-							prev <= -1 ? totalResultsCount - 1 : prev - 1
-						);
-					}
-					break;
-				case 'Enter':
-					// Handle Enter to select the current item
-					if (selectedIndex >= 0 && selectedIndex < totalResultsCount) {
-						e.preventDefault();
-						// This will be implemented in the SearchResults component
-					}
-					break;
-			}
-		};
-
-		window.addEventListener('keydown', handleKeyNavigation);
-		return () => window.removeEventListener('keydown', handleKeyNavigation);
-	}, [isOpen, totalResultsCount, selectedIndex]);
+	}, [isOpen, setQuery, setSelectedIndex]);
 
 	return (
 		<SearchContext.Provider

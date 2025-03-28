@@ -11,7 +11,7 @@ const SearchResults = () => {
 
 	return (
 		<div
-			className="flex flex-col gap-4"
+			className="flex flex-col"
 			id="search-results"
 			role="listbox"
 			aria-label="Search results"
