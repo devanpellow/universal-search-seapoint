@@ -11,6 +11,8 @@
 
 [Link to live demo](https://seapoint-universal-search.netlify.app/)
 
+[Link to Storybook](https://storybook-seapoint.netlify.app/)
+
 ## My Implementation Plan:
 
 ### 1. Project Setup
